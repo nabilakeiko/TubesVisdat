@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gender Representation in Pacific Parliaments</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-users"></i> Gender Representation in Pacific Parliaments</h1>
+  </header>
+
+  <section class="card intro-card">
+    <h2><i class="fas fa-info-circle"></i> Why This Matters</h2>
+    <p>
+      This dashboard visualizes the proportion of women in national parliaments across Pacific countries.
+      Gender parity in political representation is a key target of Sustainable Development Goal (SDG) 5.
+      This dashboard uses historical trends to show how far each nation has progressed, and which still face challenges
+      in including women in legislative processes.
+    </p>
+  </section>
+
+  <section class="controls">
+    <label>
+      <i class="fas fa-globe-asia"></i> Country
+      <select id="countrySelect"></select>
+    </label>
+    <label>
+      <i class="fas fa-calendar-alt"></i> Year
+      <select id="yearSelect"></select>
+    </label>
+  </section>
+
+  <section class="grid">
+    <div class="card" id="lineChart">
+      <h2><i class="fas fa-chart-line"></i> Trend Over Time</h2>
+      <p class="note">
+        This line chart shows the yearly progression of women's parliamentary representation in the selected country.
+        Countries like Marshall Islands show flat trends, indicating stagnation over decades.
+      </p>
+    </div>
+
+    <div class="card" id="barChart">
+      <h2><i class="fas fa-chart-bar"></i> Cross-country Comparison</h2>
+      <p class="note">
+        Compare the performance of each country in a specific year. Some, like Palau, have shown significant spikes,
+        while others remain consistently low.
+      </p>
+    </div>
+
+    <div class="card" id="pieChart">
+      <h2><i class="fas fa-chart-pie"></i> Representation Level</h2>
+      <p class="note">
+        This pie chart illustrates the classification of gender representation (Low, Medium, High)
+        for a selected country and year.
+      </p>
+    </div>
+  </section>
+
+  <section class="card insights-card">
+    <h2><i class="fas fa-lightbulb"></i> Top 5 Insights from Pacific Representation Data</h2>
+    <ol>
+      <li><strong>Persistent low levels:</strong> A majority of Pacific nations have had less than 10% female parliamentary participation for decades.</li>
+      <li><strong>Sporadic improvement:</strong> Countries like Palau showed spikes in representation, suggesting event-based or policy-driven shifts.</li>
+      <li><strong>Flat progression trend:</strong> Most nations, such as Marshall Islands, show no significant growth in participation over 20+ years.</li>
+      <li><strong>Post-2010 momentum:</strong> Many shifts upward begin to appear after 2010, potentially reflecting global SDG initiatives.</li>
+      <li><strong>Policy implications:</strong> The data supports a clear need for systemic reforms and affirmative action to drive meaningful progress by 2030.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <p>Data visualization created with D3.js | <a href="#" id="dataSource">Data Source: Pacific Women in Politics</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
