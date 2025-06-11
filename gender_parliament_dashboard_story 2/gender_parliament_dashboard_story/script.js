@@ -685,3 +685,79 @@ function drawHeatmap(data) {
     .attr("fill", "#1976d2")
     .text("Higher");
 }
+
+const imageList = [
+  "12.jpeg",
+  "11.jpeg",
+  "1.jpeg",
+  "2.jpeg",
+  "3.jpeg",
+  "4.jpeg",
+  "5.jpeg",
+  "6.jpeg",
+  "7.jpeg",
+  "8.jpeg",
+  "9.jpeg",
+  "10.jpeg",
+  "13.jpeg",
+  "14.jpeg",
+  "15.jpeg"
+  // Tambahkan nama file gambar lain di folder /image
+];
+
+const popupPositions = [
+  { left: '2%',  top: '8%'  }, // kiri atas
+  { left: '2%',  top: '45%' }, // kiri tengah
+  { left: '2%',  top: '82%' }, // kiri bawah
+  { left: '82%', top: '8%'  }, // kanan atas
+  { left: '82%', top: '45%' }, // kanan tengah
+  { left: '82%', top: '82%' }  // kanan bawah
+];
+let occupied = [false, false, false, false, false, false];
+
+function popupRandomImage() {
+  const bg = document.querySelector('.interactive-bg');
+  if (!bg) return;
+
+  const available = popupPositions
+    .map((pos, idx) => ({ pos, idx }))
+    .filter((_, idx) => !occupied[idx]);
+  if (available.length === 0) return;
+
+  const { pos, idx } = available[Math.floor(Math.random() * available.length)];
+  occupied[idx] = true;
+
+  const img = document.createElement('img');
+  const file = imageList[Math.floor(Math.random() * imageList.length)];
+  img.src = `image/${file}`;
+  img.style.position = 'absolute';
+  img.style.width = '370px';
+  img.style.opacity = 0;
+  img.style.left = pos.left;
+  img.style.top = pos.top;
+  // Mulai dari scale kecil dan rotasi acak
+  const rot = (Math.random() - 0.5) * 18; // -9deg sampai +9deg
+  img.style.transform = `scale(0.7) rotate(${rot}deg)`;
+  img.style.transition = 'transform 1.2s cubic-bezier(.4,0,.2,1), opacity 1.2s';
+  img.style.filter = 'drop-shadow(0 2px 12px #1976d244)';
+  bg.appendChild(img);
+
+  // Fade-in dan scale ke normal
+  setTimeout(() => {
+    img.style.opacity = 0.22;
+    img.style.transform = `scale(1.1) rotate(${rot}deg)`;
+  }, 60);
+
+  // Fade-out dan scale lebih besar sebelum hilang
+  setTimeout(() => {
+    img.style.opacity = 0;
+    img.style.transform = `scale(1.5) rotate(${rot}deg)`;
+    setTimeout(() => {
+      img.remove();
+      occupied[idx] = false;
+    }, 1200);
+  }, 3400 + Math.random() * 900); // bertahan 3-4 detik
+}
+
+// Munculkan gambar popup setiap 1200ms (lebih cepat)
+setInterval(popupRandomImage, 1200);

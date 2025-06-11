@@ -575,3 +575,20 @@ footer a {
   margin-bottom: 0.5em;
   text-align: justify;
 }
+
+.interactive-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.interactive-bg img {
+  position: absolute;
+  width: 220px;      /* dari 80px jadi 220px, bisa kamu sesuaikan */
+  opacity: 0.13;
+  transition: transform 1.2s cubic-bezier(.4,0,.2,1), opacity 1.2s;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 2px 12px #1976d244);
+}
