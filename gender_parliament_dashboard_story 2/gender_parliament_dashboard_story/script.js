@@ -123,17 +123,26 @@ d3.csv("data_gender_parliament.csv").then(data => {
     const pieData = yearData.filter(d => d.Country === selectedCountry);
 
     // Line Chart with animations
-    const lineContainer = d3.select("#lineChart").html("").append("div").attr("class", "chart-container");
-    lineContainer.append("h2").text("Trend Over Time");
-    lineContainer.append("p").attr("class", "note")
-      .html(`This line chart shows the yearly progression of women's parliamentary representation in <strong>${selectedCountry}</strong>. Hover over points for details.`);
-    
-    const svgLine = lineContainer.append("svg");
-    const margin = {top: 20, right: 30, bottom: 40, left: 50};
-    const width = svgLine.node().getBoundingClientRect().width - margin.left - margin.right;
-    const height = 300 - margin.top - margin.bottom;
-    
-    const g = svgLine.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+const lineContainer = d3.select("#lineChart").html("").append("div").attr("class", "chart-container");
+lineContainer.append("h2").text("Trend Over Time");
+lineContainer.append("p").attr("class", "note")
+  .html(`This line chart shows the yearly progression of women's parliamentary representation in <strong>${selectedCountry}</strong>. Hover over points for details.`);
+
+// Set width and height for SVG
+const svgWidth = 700;
+const svgHeight = 320;
+const margin = {top: 20, right: 30, bottom: 40, left: 50};
+const width = svgWidth - margin.left - margin.right;
+const height = svgHeight - margin.top - margin.bottom;
+
+const svgLine = lineContainer.append("svg")
+  .attr("width", svgWidth)
+  .attr("height", svgHeight)
+  .style("width", "100%")
+  .style("max-width", "800px")
+  .style("height", "auto");
+
+const g = svgLine.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
     
     const xL = d3.scaleLinear()
       .domain(d3.extent(filtered, d => d.Year))
@@ -241,7 +250,13 @@ d3.csv("data_gender_parliament.csv").then(data => {
     barContainer.append("p").attr("class", "note")
       .html(`Compare the performance of each country in <strong>${selectedYear}</strong>. Hover over bars for details.`);
     
-    const svgBar = barContainer.append("svg");
+    const svgBar = barContainer.append("svg")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight)
+      .style("width", "100%")
+      .style("max-width", "800px")
+      .style("height", "auto");
+
     const gBar = svgBar.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
     
     // Sort countries by value for better visualization
@@ -478,4 +493,16 @@ d3.csv("data_gender_parliament.csv").then(data => {
     item.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
     observer.observe(item);
   });
+
+  // Fade-in animation for background section
+  const bgSection = document.getElementById('backgroundSection');
+  if (bgSection) {
+    bgSection.style.opacity = 0;
+    bgSection.style.transform = 'translateY(30px)';
+    setTimeout(() => {
+      bgSection.style.transition = 'opacity 1s cubic-bezier(.4,0,.2,1), transform 1s cubic-bezier(.4,0,.2,1)';
+      bgSection.style.opacity = 1;
+      bgSection.style.transform = 'translateY(0)';
+    }, 300);
+  }
 });
