@@ -221,13 +221,17 @@ main {
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
+.dashboard-card p {
+  font-size: 1.4em;
+}
+
 .dashboard-card:hover {
   box-shadow: 0 12px 40px rgba(25, 118, 210, 0.13);
   transform: translateY(-6px) scale(1.015);
 }
 
 .insights-card-modern {
-  background: #fff;
+  background: linear-gradient(120deg, #e3f0ff 60%, #f8f9fa 100%);
   border-radius: 14px;
   box-shadow: 0 4px 24px rgba(25, 118, 210, 0.07);
   padding: 2rem 2rem 1.5rem 2rem;
@@ -261,8 +265,10 @@ footer {
   padding: 1.2rem 0 1rem 0;
   font-size: 1rem;
   margin-top: 0;
-  opacity: 1; /* pastikan tidak transparan */
-  box-shadow: 0 -2px 16px rgba(25,118,210,0.06); /* opsional, untuk efek shadow atas */
+  opacity: 1;
+  box-shadow: 0 -2px 16px rgba(25,118,210,0.06);
+  z-index: 100;
+  position: relative;
 }
 
 body > footer {
@@ -559,7 +565,7 @@ footer a {
 }
 
 .action-card-modern {
-  background: #fff;
+ background: linear-gradient(120deg, #e3f0ff 60%, #f8f9fa 100%);
   border-radius: 14px;
   box-shadow: 0 4px 24px rgba(25, 118, 210, 0.07);
   padding: 2rem 2rem 1.5rem 2rem;
@@ -598,4 +604,119 @@ footer a {
   transition: transform 1.2s cubic-bezier(.4,0,.2,1), opacity 1.2s;
   will-change: transform, opacity;
   filter: drop-shadow(0 2px 12px #1976d244);
+}
+
+.problem-analysis-card {
+  background: linear-gradient(120deg, #e3f0ff 60%, #f8f9fa 100%);
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.07);
+  padding: 2rem 2rem 1.5rem 2rem;
+  margin: 2.5rem 0 2.5rem 0;
+  animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+.problem-analysis-card h2 {
+  color: #1976d2;
+  margin-top: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+.problem-analysis-card p {
+  font-size: 1.18rem;
+  line-height: 1.7;
+  opacity: 0.97;
+  margin-bottom: 0.7em;
+  text-align: justify;
+}
+
+.insights-card-modern p,
+.action-card-modern p,
+.problem-analysis-card p {
+  font-size: 1.4em;
+  line-height: 1.7;
+  opacity: 0.97;
+  margin-bottom: 0.7em;
+  text-align: justify;
+}
+
+.dashboard-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.2rem 2rem 1.2rem;
+}
+
+.dashboard-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+}
+.dashboard-row > .dashboard-card,
+.dashboard-row > section.insights-card-modern {
+  flex: 1 1 350px;
+  min-width: 320px;
+}
+
+.dashboard-divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #e3f0ff 0%, #1976d2 50%, #e3f0ff 100%);
+  opacity: 0.13;
+  margin: 2.5rem 0 2.5rem 0;
+  border-radius: 2px;
+}
+
+.highlight-blue {
+  color: #1976d2;
+  font-weight: bold;
+  background: #e3f0ff;
+  border-radius: 4px;
+  padding: 0 0.25em;
+}
+
+.icon-alert {
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin-right: 0.3em;
+}
+
+@media (max-width: 900px) {
+  .dashboard-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.dashboard-row-align-center {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.heatmap-overview-right {
+  max-width: 420px;
+  min-width: 280px;
+  margin: 0;
+  /* Optional: agar card tidak terlalu tinggi */
+  align-self: center;
+}
+
+.dashboard-row-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+.dashboard-card .chart-container,
+.chart-placeholder {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0 auto;
+  display: block;
+  overflow-x: auto;
 }

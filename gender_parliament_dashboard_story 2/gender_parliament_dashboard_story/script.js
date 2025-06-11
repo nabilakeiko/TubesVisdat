@@ -127,9 +127,9 @@ lineContainer.append("p").attr("class", "note")
   .html(`This line chart shows the yearly progression of women's parliamentary representation in <strong>${selectedCountry}</strong>. Hover over points for details.`);
 
 // Set width and height for SVG
-const svgWidth = 700;
-const svgHeight = 320;
-const margin = {top: 20, right: 30, bottom: 40, left: 50};
+const svgWidth = 900;   // dari 700 jadi 900
+const svgHeight = 400;  // dari 320 jadi 400
+const margin = {top: 30, right: 40, bottom: 60, left: 60}; // margin lebih besar agar label tidak terpotong
 const width = svgWidth - margin.left - margin.right;
 const height = svgHeight - margin.top - margin.bottom;
 

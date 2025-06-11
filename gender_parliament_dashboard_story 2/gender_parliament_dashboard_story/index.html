@@ -25,23 +25,27 @@
 
   <div class="interactive-bg"></div>
   <main>
+  <div class="dashboard-wrapper">
+    <!-- Section: Background & Problem -->
     <section class="background-card">
-
       <div class="background-text">
         <h2>Background</h2>
-        <!-- Ringkasan background narasi -->
-<p>
-  Achieving gender equality in political representation is a key goal of Sustainable Development Goal (SDG) 5, which calls for women’s full and effective participation in leadership at all levels. However, women remain significantly underrepresented in national parliaments across the Pacific region, with many countries still falling below <span class="highlight-red-bg">10%</span> female representation. This gap is driven by persistent structural and societal barriers, such as entrenched patriarchal norms, limited access to resources, and weak institutional support for women leaders.
-</p>
-<p>
-  This underrepresentation is more than just a statistic—it reflects broader exclusion from political power and impacts the inclusiveness and responsiveness of governance. Research shows that greater participation of women in politics leads to more equitable and people-centered policymaking, especially in areas like health, education, and social protection.
-</p>
-<p>
-  To highlight these gender gaps and promote data-driven action, this interactive dashboard visualizes trends in women’s parliamentary representation across Pacific countries from 2000 to 2023. The tool enables users to explore progress and setbacks, compare countries over time, and supports efforts to strengthen women’s political empowerment in the region.
-</p>
+        <p>Achieving gender equality in political representation is a key goal of Sustainable Development Goal (SDG) 5, which calls for women’s full and effective participation in leadership at all levels. However, women remain significantly underrepresented in national parliaments across the Pacific region, with many countries still falling below <span class="highlight-blue">10%</span> female representation. This gap is driven by persistent structural and societal barriers, such as entrenched patriarchal norms, limited access to resources, and weak institutional support for women leaders.</p>
+        <p>This underrepresentation is more than just a statistic—it reflects broader exclusion from political power and impacts the inclusiveness and responsiveness of governance. Research shows that greater participation of women in politics leads to more equitable and people-centered policymaking, especially in areas like health, education, and social protection.</p>
+        <p>To highlight these gender gaps and promote data-driven action, this interactive dashboard visualizes trends in women’s parliamentary representation across Pacific countries from 2000 to 2023. The tool enables users to explore progress and setbacks, compare countries over time, and supports efforts to strengthen women’s political empowerment in the region.</p>
       </div>
     </section>
 
+    <section class="problem-analysis-card">
+      <h2><span class="icon-alert">⚠️</span> Problem Analysis: Why Does the Gender Gap Persist?</h2>
+      <p>Despite global commitments to gender equality, women’s representation in Pacific parliaments remains persistently low. The data from 2000 to 2023 shows that most Pacific countries have consistently had less than <span class="highlight-blue">10%</span> female parliamentary participation, with only a few exceptions reaching moderate or high levels. This chronic underrepresentation is not merely a statistical issue—it reflects deep-rooted structural and cultural barriers, including patriarchal norms, limited access to political networks, and insufficient institutional support for women candidates.</p>
+      <p>While some countries, such as Palau and Samoa, have experienced sporadic improvements or brief spikes in women’s representation, these gains are often not sustained over time. The majority of nations, like the Marshall Islands and Tuvalu, show little to no significant growth, indicating that progress is slow and uneven across the region. Even in countries that have achieved moderate or high representation, such as French Polynesia and New Caledonia, these cases are rare and not indicative of a broader regional trend.</p>
+    </section>
+
+    <!-- Divider -->
+    <div class="dashboard-divider"></div>
+
+    <!-- Section: Filter Controls -->
     <section class="controls-card">
       <div class="controls-card-inner">
         <div class="filter-group">
@@ -55,37 +59,79 @@
       </div>
     </section>
 
+    <!-- Section: Charts & Narasi -->
     <section class="dashboard-grid">
-      <div class="dashboard-card" id="lineChart">
-        <div class="chart-placeholder">
-          <svg width="80" height="40" style="opacity:0.3">
-            <polyline points="5,35 25,20 45,30 65,10 75,15" fill="none" stroke="#1976d2" stroke-width="4"/>
-           </svg>
-          <p>Select a country and year to display the chart.</p>
+      <div class="dashboard-row dashboard-row-vertical" style="margin-bottom:2.5rem;">
+        <!-- Line Chart & Narasi -->
+        <div class="dashboard-card" id="lineChart">
+          <div class="chart-placeholder">
+            <svg width="700" height="320" style="display:block;margin:0 auto;opacity:0.3">
+              <polyline points="30,300 150,180 270,220 390,100 470,150" fill="none" stroke="#1976d2" stroke-width="8"/>
+            </svg>
+            <p>
+              <strong>Trend Over Time</strong><br>
+              This line chart shows the yearly progression of women's parliamentary representation.<br>
+              Hover over points for details.
+            </p>
+          </div>
         </div>
+        <section class="insights-card-modern">
+          <h2>Time Trend</h2>
+          <p>
+            From 2000 to 2023, most Pacific countries show little change in women’s representation. Only a handful have seen gradual improvement, and overall progress remains slow.
+          </p>
+        </section>
+
+        <!-- Bar Chart & Narasi -->
+        <div class="dashboard-card" id="barChart">
+          <div class="chart-placeholder">
+            <svg width="700" height="320" style="display:block;margin:0 auto;opacity:0.3">
+              <rect x="60" y="200" width="40" height="100" fill="#1976d2"/>
+              <rect x="140" y="160" width="40" height="140" fill="#1976d2"/>
+              <rect x="220" y="120" width="40" height="180" fill="#1976d2"/>
+              <rect x="300" y="80" width="40" height="220" fill="#1976d2"/>
+            </svg>
+            <p>
+              <strong>Cross-country Comparison</strong><br>
+              Compare the performance of each country in a specific year.<br>
+              Hover over bars for details.
+            </p>
+          </div>
+        </div>
+        <section class="insights-card-modern">
+          <h2>Country Comparison</h2>
+          <p>
+            Women’s parliamentary representation in the Pacific varies widely. Most countries, like the Marshall Islands, remain below <span class="highlight-blue">10%</span>, while only a few, such as French Polynesia, have achieved higher rates. This highlights uneven progress across the region.
+          </p>
+        </section>
       </div>
-      <div class="dashboard-card" id="barChart">
-        <div class="chart-placeholder">
-          <svg width="80" height="40" style="opacity:0.3">
-            <polyline points="5,35 25,20 45,30 65,10 75,15" fill="none" stroke="#1976d2" stroke-width="4"/>
-           </svg>
-          <p>Select a country and year to display the chart.</p>
+
+      <div class="dashboard-row dashboard-row-align-center">
+        <div class="dashboard-card" id="heatmapChart">
+          <div class="chart-placeholder">
+            <svg width="120" height="40" style="opacity:0.3">
+              <rect x="10" y="10" width="100" height="20" fill="#1976d2" opacity="0.2"/>
+            </svg>
+            <p>Heatmap: All countries and years at a glance.<br><span style="font-size:0.95em;color:#1976d2;">Darker = higher representation</span></p>
+          </div>
         </div>
-      </div>
-      <div class="dashboard-card" id="heatmapChart">
-        <div class="chart-placeholder">
-          <svg width="120" height="40" style="opacity:0.3">
-            <rect x="10" y="10" width="100" height="20" fill="#1976d2" opacity="0.2"/>
-          </svg>
-          <p>Heatmap: All countries and years at a glance.<br><span style="font-size:0.95em;color:#1976d2;">Darker = higher representation</span></p>
-        </div>
+        <section class="insights-card-modern heatmap-overview-right">
+          <h2>Heatmap Overview</h2>
+          <p>
+            The heatmap provides a clear visual overview of women’s parliamentary representation across Pacific countries and years. Darker shades indicate higher percentages of female members, while lighter shades highlight countries and periods with lower representation. This visualization makes it easy to spot persistent gaps, identify countries with progress, and compare trends over time at a glance.
+          </p>
+        </section>
       </div>
     </section>
 
+    <!-- Divider -->
+    <div class="dashboard-divider"></div>
+
+    <!-- Section: Insights & Action -->
     <section class="insights-card-modern">
       <h2>Top 5 Insights</h2>
       <ol>
-        <li><strong>Persistent low levels:</strong> Most Pacific nations have had less than 10% female parliamentary participation for decades.</li>
+        <li><strong>Persistent low levels:</strong> Most Pacific nations have had less than <span class="highlight-blue">10%</span> female parliamentary participation for decades.</li>
         <li><strong>Sporadic improvement:</strong> Countries like Palau showed spikes in representation, suggesting event-based or policy-driven shifts.</li>
         <li><strong>Flat progression trend:</strong> Most nations, such as Marshall Islands, show no significant growth in participation over 20+ years.</li>
         <li><strong>Post-2010 momentum:</strong> Many shifts upward begin to appear after 2010, potentially reflecting global SDG initiatives.</li>
@@ -99,7 +145,8 @@
         To accelerate progress toward gender equality in Pacific parliaments, it is crucial for governments, civil society, and international partners to strengthen support for women’s political participation. This includes implementing affirmative policies, investing in leadership training, and fostering inclusive political environments. <span class="highlight-blue">Let’s work together to ensure every woman has an equal voice in shaping the future of her country.</span>
       </p>
     </section>
-  </main>
+  </div>
+</main>
 
   <footer>
     <p>Data visualization created with D3.js | <a href="#" id="dataSource">Data Source: Pacific Women in Politics</a></p>
