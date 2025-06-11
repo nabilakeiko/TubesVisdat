@@ -14,7 +14,7 @@ d3.csv("data_gender_parliament.csv").then(data => {
     .style("align-items", "center")
     .style("z-index", "1000")
     .html("<div style='text-align:center;'><h2>Loading Data...</h2><p>Preparing visualizations</p></div>");
-
+    drawHeatmap(data);
   // Parse data
   data.forEach(d => {
     d.Year = +d.Year;
@@ -93,24 +93,22 @@ d3.csv("data_gender_parliament.csv").then(data => {
   }
 
   function showTooltip(event, d, content) {
-    const tooltip = createTooltip();
-    
-    tooltip.html(content)
-      .style("left", (event.pageX + 15) + "px")
-      .style("top", (event.pageY - 30) + "px")
-      .transition()
-      .duration(200)
-      .style("opacity", 1)
-      .style("transform", "translateY(-5px)");
-  }
+  const tooltip = createTooltip();
+  tooltip.html(content)
+    .style("left", (event.pageX + 15) + "px")
+    .style("top", (event.pageY - 30) + "px")
+    .transition()
+    .duration(100)
+    .style("opacity", 1)
+    .style("pointer-events", "none");
+}
 
   function hideTooltip() {
-    d3.select("#tooltip")
-      .transition()
-      .duration(200)
-      .style("opacity", 0)
-      .style("transform", "translateY(0px)");
-  }
+  d3.select("#tooltip")
+    .transition()
+    .duration(100)
+    .style("opacity", 0);
+}
 
   function updateCharts() {
     const selectedCountry = d3.select("#countrySelect").node().value;
@@ -456,6 +454,8 @@ const g = svgLine.append("g").attr("transform", `translate(${margin.left},${marg
         .duration(500)
         .style("opacity", 1);
     }
+
+    drawHeatmap(data); // Panggil fungsi heatmap setelah grafik lainnya
   }
 
   // Event listeners for dropdowns
@@ -506,3 +506,182 @@ const g = svgLine.append("g").attr("transform", `translate(${margin.left},${marg
     }, 300);
   }
 });
+
+function drawHeatmap(data) {
+  const years = [...new Set(data.map(d => d.Year))];
+  const countries = [...new Set(data.map(d => d.Country))];
+
+  const cellSize = 28;
+  const margin = {top: 60, right: 30, bottom: 60, left: 140};
+  const width = cellSize * years.length + margin.left + margin.right;
+  const height = cellSize * countries.length + margin.top + margin.bottom;
+
+  d3.select("#heatmapChart").html("");
+
+  // Card style wrapper
+  const card = d3.select("#heatmapChart")
+    .append("div")
+    .style("background", "#fff")
+    .style("border-radius", "18px")
+    .style("box-shadow", "0 4px 32px rgba(25,118,210,0.10)")
+    .style("padding", "2.5rem 2rem 2.5rem 2rem")
+    .style("overflow-x", "auto")
+    .style("display", "inline-block");
+
+  card.append("h2")
+    .style("margin-bottom", "1.5rem")
+    .style("color", "#1976d2")
+    .style("font-size", "2rem")
+    .style("font-weight", "700")
+    .text("Heatmap: Representation Over Time");
+
+  const svg = card.append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#f8fbff")
+    .style("border-radius", "12px")
+    .style("box-shadow", "0 2px 16px rgba(25,118,210,0.06)");
+
+  // Skala warna
+  const colorScale = d3.scaleSequential(d3.interpolateYlGnBu)
+    .domain([0, d3.max(data, d => +d.Value)]);
+
+  // Negara (Y axis)
+  svg.selectAll(".countryLabel")
+    .data(countries)
+    .enter()
+    .append("text")
+    .attr("x", margin.left - 12)
+    .attr("y", (d, i) => margin.top + i * cellSize + cellSize / 1.6)
+    .attr("text-anchor", "end")
+    .attr("font-size", "1.08rem")
+    .attr("fill", "#1976d2")
+    .attr("font-weight", 600)
+    .text(d => d);
+
+  // Tahun (X axis)
+  svg.selectAll(".yearLabel")
+  .data(years)
+  .enter()
+  .append("text")
+  .attr("x", (d, i) => margin.left + i * cellSize + cellSize / 2 + 10)
+  .attr("y", margin.top - 22) // lebih dekat ke cell
+  .attr("text-anchor", "middle") // tengah
+  .attr("font-size", "1.05rem")
+  .attr("fill", "#1976d2")
+  .attr("font-weight", 500)
+  .attr("transform", (d, i) => `rotate(-45,${margin.left + i * cellSize + (cellSize - 3) / 2},${margin.top - 22})`)
+    .text((d, i) => (i % 2 === 0 ? d : "")) // hanya tampilkan tahun genap
+
+  // Cell
+  svg.selectAll(".row")
+    .data(countries)
+    .enter()
+    .append("g")
+    .attr("class", "row")
+    .attr("transform", (d, i) => `translate(0,${margin.top + i * cellSize})`)
+    .each(function(country, rowIdx) {
+      d3.select(this).selectAll(".cell")
+        .data(years)
+        .enter()
+        .append("rect")
+        .attr("x", (d, colIdx) => margin.left + colIdx * cellSize)
+        .attr("width", cellSize - 3)
+        .attr("height", cellSize - 3)
+        .attr("rx", 7)
+        .attr("ry", 7)
+        .attr("fill", year => {
+          const found = data.find(e => e.Country === country && e.Year === year);
+          return found ? colorScale(+found.Value) : "#f0f4fa";
+        })
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1.5)
+        .style("cursor", "pointer")
+        .on("mouseover", function(event, year) {
+          const found = data.find(e => e.Country === country && e.Year === year);
+          d3.select(this)
+            .attr("stroke", "#1976d2")
+            .attr("stroke-width", 3)
+            .attr("filter", "drop-shadow(0 0 8px #1976d2aa)");
+          if (found) {
+            const [x, y] = d3.pointer(event, svg.node());
+            d3.select("#heatmapChart").append("div")
+              .attr("class", "heatmap-tooltip")
+              .style("position", "absolute")
+              .style("left", `${x + 60}px`)
+              .style("top", `${y + 30}px`)
+              .style("background", "#fff")
+              .style("border", "1.5px solid #1976d2")
+              .style("padding", "8px 16px")
+              .style("border-radius", "10px")
+              .style("pointer-events", "none")
+              .style("font-size", "1.05rem")
+              .style("color", "#1976d2")
+              .style("box-shadow", "0 4px 16px rgba(25,118,210,0.10)")
+              .html(`<strong>${country}</strong><br>Year: ${year}<br>Value: <b>${found.Value}%</b>`);
+          }
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5)
+            .attr("filter", null);
+          d3.select("#heatmapChart").selectAll(".heatmap-tooltip").remove();
+        });
+    });
+
+  // Legend
+  const legendWidth = 160;
+  const legendHeight = 14;
+  const legendSvg = card.append("svg")
+    .attr("width", legendWidth + 60)
+    .attr("height", 40)
+    .style("margin-top", "18px");
+
+  // Gradient
+  const defs = legendSvg.append("defs");
+  const linearGradient = defs.append("linearGradient")
+    .attr("id", "heatmap-gradient");
+  linearGradient.selectAll("stop")
+    .data([
+      {offset: "0%", color: colorScale.range()[0]},
+      {offset: "100%", color: colorScale.range()[1]}
+    ])
+    .enter()
+    .append("stop")
+    .attr("offset", d => d.offset)
+    .attr("stop-color", d => d.color);
+
+  legendSvg.append("rect")
+    .attr("x", 30)
+    .attr("y", 10)
+    .attr("width", legendWidth)
+    .attr("height", legendHeight)
+    .style("fill", "url(#heatmap-gradient)")
+    .attr("rx", 6);
+
+  // Legend label
+  legendSvg.append("text")
+    .attr("x", 30)
+    .attr("y", 35)
+    .attr("text-anchor", "start")
+    .attr("font-size", "0.95rem")
+    .attr("fill", "#1976d2")
+    .text("0%");
+
+  legendSvg.append("text")
+    .attr("x", 30 + legendWidth)
+    .attr("y", 35)
+    .attr("text-anchor", "end")
+    .attr("font-size", "0.95rem")
+    .attr("fill", "#1976d2")
+    .text(`${Math.round(colorScale.domain()[1])}%`);
+
+  legendSvg.append("text")
+    .attr("x", 30 + legendWidth / 2)
+    .attr("y", 35)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "0.95rem")
+    .attr("fill", "#1976d2")
+    .text("Higher");
+}

@@ -20,6 +20,7 @@
       <h1>Pacific Gender Parliament</h1>
       <p class="subtitle">Visualizing Women's Representation in Pacific Parliaments (2000–2023)</p>
     </div>
+    <div class="scroll-indicator"></div>
   </header>
 
   <main>
@@ -64,8 +65,30 @@
     </section>
 
     <section class="dashboard-grid">
-      <div class="dashboard-card" id="lineChart"></div>
-      <div class="dashboard-card" id="barChart"></div>
+      <div class="dashboard-card" id="lineChart">
+        <div class="chart-placeholder">
+          <svg width="80" height="40" style="opacity:0.3">
+            <polyline points="5,35 25,20 45,30 65,10 75,15" fill="none" stroke="#1976d2" stroke-width="4"/>
+           </svg>
+          <p>Select a country and year to display the chart.</p>
+        </div>
+      </div>
+      <div class="dashboard-card" id="barChart">
+        <div class="chart-placeholder">
+          <svg width="80" height="40" style="opacity:0.3">
+            <polyline points="5,35 25,20 45,30 65,10 75,15" fill="none" stroke="#1976d2" stroke-width="4"/>
+           </svg>
+          <p>Select a country and year to display the chart.</p>
+        </div>
+      </div>
+      <div class="dashboard-card" id="heatmapChart">
+        <div class="chart-placeholder">
+          <svg width="120" height="40" style="opacity:0.3">
+            <rect x="10" y="10" width="100" height="20" fill="#1976d2" opacity="0.2"/>
+          </svg>
+          <p>Heatmap: All countries and years at a glance.<br><span style="font-size:0.95em;color:#1976d2;">Darker = higher representation</span></p>
+        </div>
+      </div>
     </section>
 
     <section class="insights-card-modern">
