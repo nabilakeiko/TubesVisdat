@@ -261,6 +261,13 @@ footer {
   padding: 1.2rem 0 1rem 0;
   font-size: 1rem;
   margin-top: 0;
+  opacity: 1; /* pastikan tidak transparan */
+  box-shadow: 0 -2px 16px rgba(25,118,210,0.06); /* opsional, untuk efek shadow atas */
+}
+
+body > footer {
+  background: #1976d2 !important;
+  opacity: 1 !important;
 }
 
 footer a {
@@ -586,7 +593,7 @@ footer a {
 
 .interactive-bg img {
   position: absolute;
-  width: 220px;      /* dari 80px jadi 220px, bisa kamu sesuaikan */
+  width: 400px; /* lebih besar dari sebelumnya */
   opacity: 0.13;
   transition: transform 1.2s cubic-bezier(.4,0,.2,1), opacity 1.2s;
   will-change: transform, opacity;
