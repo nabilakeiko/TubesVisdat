@@ -455,6 +455,9 @@ const g = svgLine.append("g").attr("transform", `translate(${margin.left},${marg
         .style("opacity", 1);
     }
 
+    // Update auto insights
+    updateAutoInsight(filtered, selectedCountry, selectedYear);
+
     drawHeatmap(data); // Panggil fungsi heatmap setelah grafik lainnya
   }
 
@@ -761,3 +764,37 @@ function popupRandomImage() {
 
 // Munculkan gambar popup setiap 1200ms (lebih cepat)
 setInterval(popupRandomImage, 1200);
+
+function updateAutoInsight(filteredData, selectedCountry, selectedYear) {
+  const el = document.getElementById('autoInsightText');
+  if (!el) return;
+
+  if (!filteredData.length) {
+    el.textContent = "No data available for the selected filter.";
+    return;
+  }
+
+  // Contoh insight: nilai tertinggi, terendah, rata-rata, tren
+  const values = filteredData.map(d => +d.Value);
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(2);
+
+  let trend = "";
+  if (filteredData.length > 1) {
+    const first = +filteredData[0].Value;
+    const last = +filteredData[filteredData.length - 1].Value;
+    if (last > first) trend = "an upward trend";
+    else if (last < first) trend = "a downward trend";
+    else trend = "a flat trend";
+  }
+
+  el.innerHTML = `
+    <strong>${selectedCountry ? selectedCountry : "All Countries"}</strong> from <strong>${filteredData[0].Year}</strong> to <strong>${filteredData[filteredData.length-1].Year}</strong>:<br>
+    Highest: <span class="highlight-blue">${max}%</span>, Lowest: <span class="highlight-blue">${min}%</span>, Average: <span class="highlight-blue">${avg}%</span>.<br>
+    The data shows <strong>${trend}</strong> in women's parliamentary representation.
+  `;
+}
+
+// Panggil fungsi ini setiap kali filter berubah, misal:
+// updateAutoInsight(filteredData, selectedCountry, selectedYear);
